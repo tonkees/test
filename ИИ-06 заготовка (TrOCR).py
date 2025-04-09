@@ -1,7 +1,7 @@
-
+import torch
 import io
 import streamlit as st
-import torch
+
 
 from transformers import pipeline
 from PIL import Image
@@ -13,7 +13,7 @@ torch._C._log_api_usage_once("app")
 
 def load_image():
     
-    uploaded_file = st.file_uploader(label='Выберите изображение для распознавания')
+    uploaded_file = st.file_uploader(label='maxresdefault.jpg')
     if uploaded_file is not None:
         image_data = uploaded_file.getvalue()
         st.image(image_data)
