@@ -16,6 +16,7 @@ def load_image():
     if uploaded_file is not None:
         image_data = uploaded_file.getvalue()
         st.image(image_data)
+        
         return Image.open(io.BytesIO(image_data))
     else:
         return None
@@ -26,12 +27,14 @@ img = load_image()
 
 result = st.button('Распознать изображение')
 if result:
-    captioner = pipeline(
-        "image-to-text",
-        "microsoft/trocr-large-printed",
-        token=st.secrets["HUGGINGFACE_TOKEN"],
-            max_new_tokens=50
+    if img is not None:
+        captioner = pipeline(
+            "image-to-text",
+            "microsoft/trocr-large-printed",
+            token=st.secrets["HUGGINGFACE_TOKEN"]
         )
-    text = captioner(img)
-    st.write('Результаты распознавания:')
-    st.write(text[0]["generated_text"])
+        text = captioner(img, max_new_tokens=50)
+        st.write('Результаты распознавания:')
+        st.write(text[0]["generated_text"])
+    else:
+        st.warning("Сначала загрузите изображение!")
