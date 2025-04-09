@@ -1,6 +1,7 @@
-import torch
+
 import io
 import streamlit as st
+import torch
 
 from transformers import pipeline
 from PIL import Image
